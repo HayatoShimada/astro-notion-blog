@@ -26,7 +26,7 @@ const siteOGImage = new URL(
   Astro.site
 )
 
-let coverImageURL: string
+let coverImageURL: string = ""
 if (database.Cover) {
   if (database.Cover.Type === 'external') {
     coverImageURL = database.Cover.Url
@@ -39,7 +39,7 @@ if (database.Cover) {
   }
 }
 
-let customIconURL: string
+let customIconURL: string = ""
 if (database.Icon && database.Icon.Type === 'file') {
   try {
     customIconURL = filePath(new URL(database.Icon.Url))
@@ -133,7 +133,7 @@ if (database.Icon && database.Icon.Type === 'file') {
                 class="md:flex md:items-center md:justify-between"
               >
                 <div class="flex justify-center space-x-6 md:order-2">
-                  <a href="#" class="text-gray-400 hover:text-gray-500">
+                  <a href="https://www.facebook.com/hayato.shimada.739" class="text-gray-400 hover:text-gray-500">
                     <span class="sr-only">Facebook</span>
                     <svg
                       class="h-6 w-6"
@@ -147,7 +147,7 @@ if (database.Icon && database.Icon.Type === 'file') {
                         clip-rule="evenodd"></path>
                     </svg>
                   </a>
-                  <a href="#" class="text-gray-400 hover:text-gray-500">
+                  <a href="https://www.instagram.com/shimadaha1992/" class="text-gray-400 hover:text-gray-500">
                     <span class="sr-only">Instagram</span>
                     <svg
                       class="h-6 w-6"
@@ -161,7 +161,7 @@ if (database.Icon && database.Icon.Type === 'file') {
                         clip-rule="evenodd"></path>
                     </svg>
                   </a>
-                  <a href="#" class="text-gray-400 hover:text-gray-500">
+                  <!-- <a href="#" class="text-gray-400 hover:text-gray-500">
                     <span class="sr-only">X</span>
                     <svg
                       class="h-6 w-6"
@@ -173,8 +173,8 @@ if (database.Icon && database.Icon.Type === 'file') {
                         d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"
                       ></path>
                     </svg>
-                  </a>
-                  <a href="#" class="text-gray-400 hover:text-gray-500">
+                  </a> -->
+                  <a href="https://github.com/HayatoShimada" class="text-gray-400 hover:text-gray-500">
                     <span class="sr-only">GitHub</span>
                     <svg
                       class="h-6 w-6"
@@ -188,7 +188,7 @@ if (database.Icon && database.Icon.Type === 'file') {
                         clip-rule="evenodd"></path>
                     </svg>
                   </a>
-                  <a href="#" class="text-gray-400 hover:text-gray-500">
+                  <a href="https://www.youtube.com/channel/UC7iSZYkWhMwQ0n8cNTGVTEw" class="text-gray-400 hover:text-gray-500">
                     <span class="sr-only">YouTube</span>
                     <svg
                       class="h-6 w-6"
