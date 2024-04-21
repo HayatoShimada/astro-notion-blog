@@ -1,6 +1,12 @@
 ---
 import { Post } from '../lib/interfaces.ts'
 import { filePath } from '../lib/blog-helpers'
+import PostTitle from './PostTitle.astro'
+import PostExcerpt from './PostExcerpt.astro'
+import { getPostLink } from '../lib/blog-helpers.ts'
+import PostDate from './PostDate.astro'
+import PostTags from './PostTags.astro'
+import ReadMoreLink from './ReadMoreLink.astro'
 
 export interface Props {
   post: Post
@@ -8,31 +14,49 @@ export interface Props {
 
 const { post } = Astro.props
 
-let image = ''
+let title = post.Title
+
+let image = '';
+const defaultImageUrl = '/path/to/default/image.jpg'; // 代替画像のURLを設定
+
 if (post.FeaturedImage && post.FeaturedImage.Url) {
   if (import.meta.env.DEV) {
-    image = post.FeaturedImage.Url
+    image = post.FeaturedImage.Url;
   } else {
-    image = filePath(new URL(post.FeaturedImage.Url))
+    image = filePath(new URL(post.FeaturedImage.Url));
   }
+} else {
+  image = defaultImageUrl; // 画像がない場合にデフォルトの画像を使用
 }
+
 ---
 
 {
   image && (
-    <div class="post-featured-image">
-      <img src={image} alt="Featured image of the post" />
-    </div>
+    <>
+      <div class="relative block w-full">
+          <img
+            src={image}
+            alt={post.Title}
+            class="w-full h-48 object-cover brightness-50 hover:brightness-100 transition-all duration-300 ease-in-out"
+          />
+          <div class="absolute top-0 left-0 p-2 text-white text-xs font-semibold">
+            <PostDate post={post} />
+          </div>
+          <div class="absolute top-0 right-0 p-2">
+            <PostTags post={post} />
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <h1 class="text-white text-3xl font-bold">
+                <PostTitle post={post} />
+              </h1>
+              <p class="text-white text-base mt-2">
+                <PostExcerpt post={post} />
+              </p>
+            </div>
+          </div>
+      </div>
+    </>
   )
 }
-
-<style>
-  .post-featured-image {
-    padding: 0.6rem 0 0.2rem;
-  }
-  .post-featured-image img {
-    display: block;
-    max-width: 100%;
-    max-height: 20rem;
-  }
-</style>

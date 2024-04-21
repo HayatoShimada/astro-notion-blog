@@ -1,5 +1,7 @@
 ---
 import { Post } from '../lib/interfaces.ts'
+import { getPostLink } from '../lib/blog-helpers.ts'
+
 
 export interface Props {
   post: Post
@@ -9,7 +11,10 @@ const { post } = Astro.props
 ---
 
 <div class="post-excerpt">
+  <a href={getPostLink(post.Slug)}>
+
   <p>{post.Excerpt ? post.Excerpt : ''}</p>
+  </a>
 </div>
 
 <style>
