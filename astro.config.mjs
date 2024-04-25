@@ -28,11 +28,11 @@ const getSite = function () {
 export default defineConfig({
   site: getSite(),
   base: BASE_PATH,
-  integrations: [CoverImageDownloader(), CustomIconDownloader(), FeaturedImageDownloader(), PublicNotionCopier(), tailwind()],
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true }
   }),
+  integrations: [CoverImageDownloader(), CustomIconDownloader(), FeaturedImageDownloader(), PublicNotionCopier(), tailwind()]
 
 });
 
