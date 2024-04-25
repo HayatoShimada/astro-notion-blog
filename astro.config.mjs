@@ -28,3 +28,4 @@ export default defineConfig({
   base: BASE_PATH,
   integrations: [CoverImageDownloader(), CustomIconDownloader(), FeaturedImageDownloader(), PublicNotionCopier(), tailwind()]
 });
+
