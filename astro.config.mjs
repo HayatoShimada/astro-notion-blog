@@ -5,7 +5,7 @@ import CustomIconDownloader from './src/integrations/custom-icon-downloader';
 import FeaturedImageDownloader from './src/integrations/featured-image-downloader';
 import PublicNotionCopier from './src/integrations/public-notion-copier';
 import tailwind from "@astrojs/tailwind";
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel'
 
 const getSite = function () {
   if (CUSTOM_DOMAIN) {
