@@ -28,6 +28,7 @@
     "axios": "^1.4.0",
     "dotenv": "^16.4.5",
     "exif-be-gone": "^1.3.2",
+    "fslightbox-react": "^1.7.6",
     "katex": "^0.16.7",
     "mermaid": "^10.1.0",
     "metascraper": "^5.34.4",

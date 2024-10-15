@@ -50,6 +50,10 @@ if (block.Image.External) {
   .image > div > div img {
     display: block;
     max-width: 100%;
-    padding: 10px;
+    padding: 2rem; /* 画像自体のパディング */
+  }
+  .image > div > div + .Caption {
+    margin-top: -2rem; /* 画像のパディング分だけマイナスの余白を設定 */
   }
 </style>
+

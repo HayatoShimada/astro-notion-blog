@@ -20,8 +20,7 @@ let metadata: Record<string, string>
 try {
   url = new URL(urlString)
 
-  //if (!isAmazonURL(url)) {
-  if (true) {
+  if (!isAmazonURL(url)) {
   
     const metascraper = createMetascraper([
       metascraperDescription(),
