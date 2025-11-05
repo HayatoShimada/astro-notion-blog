@@ -2,15 +2,58 @@
 import Layout from '../layouts/Layout.astro'
 import { getNavLink } from '../lib/blog-helpers.ts'
 import { getPosts } from '../lib/notion/client.ts'
-import PostFeaturedImage from '../components/PostFeaturedImage.astro'
 import PortfolioCard from '../components/PortfolioCard.astro'
-import styles from '../styles/blog.module.css'
 
 // 最新3件のブログ記事を取得
 const recentPosts = await getPosts(4)
 
+// 技術スタック
+const techStack = [
+  { 
+    name: 'Next.js', 
+    category: 'Frontend',
+    icon: 'https://cdn.simpleicons.org/nextdotjs/white',
+    color: '#000000'
+  },
+  { 
+    name: 'TypeScript', 
+    category: 'Language',
+    icon: 'https://cdn.simpleicons.org/typescript/white',
+    color: '#3178C6'
+  },
+  { 
+    name: 'PostgreSQL', 
+    category: 'Database',
+    icon: 'https://cdn.simpleicons.org/postgresql/white',
+    color: '#4169E1'
+  },
+  { 
+    name: 'PLC', 
+    category: 'Automation',
+    color: '#E60012'
+  },
+  { 
+    name: 'Adobe', 
+    category: 'Design',
+    color: '#FF0000'
+  },
+  { 
+    name: 'Python', 
+    category: 'Language',
+    icon: 'https://cdn.simpleicons.org/python/white',
+    color: '#3776AB'
+  }
+]
+
 // ポートフォリオプロジェクトのデータ
 const portfolioProjects = [
+  {
+    imagePath: '/images/85-nefuda-3d.png',
+    title: '85-Nefuda 3D',
+    description: '85-Storeの値札デザイン。',
+    link: 'https://85-store.com/',
+    tags: ['Design', '2D Works']
+  },
   {
     imagePath: '/images/85-Store.png',
     title: '85-Store',
@@ -19,11 +62,29 @@ const portfolioProjects = [
     tags: ['Development', 'Design', 'Next.js']
   },
   {
+    imagePath: '/images/placeholder.png',
+    title: '85-Store',
+    description: '85-Storeロゴデザイン。',
+    tags: ['Design', 'Logo']
+  },
+  {
     imagePath: '/images/Amu-Technologies2.png',
     title: 'Amu-Technologies',
     description: 'Amu-Technologiesのコーポレートサイト。',
     link: 'https://amu-lab.com/',
     tags: ['Development', 'Next.js']
+  },
+  {
+    imagePath: '/images/amulogo.png',
+    title: 'Amu-Technologies',
+    description: 'Amu-Technologiesロゴデザイン。',
+    tags: ['Design', 'Logo']
+  },
+  {
+    imagePath: '/images/toyama_city_philharmony.png',
+    title: 'Toyama City Philharmony',
+    description: 'Toyama City Philharmonyロゴデザイン。',
+    tags: ['Design', 'Logo']
   }
 ]
 ---
@@ -31,11 +92,33 @@ const portfolioProjects = [
 <Layout title="Portfolio" description="Hayato Shimadaのポートフォリオとブログ" path="/" ogImage="">
   <div slot="main" class="portfolio-container">
     <section class="hero">
-      <h1 class="hero-title">Hayato Shimada</h1>
-      <p class="hero-subtitle">Developer & Designer</p>
-      <p class="hero-text">
-        テクノロジーとデザインの交差点で、意味のある体験を創造しています。
+      <h1 class="hero-title">Development & Design</h1>
+      <p class="hero-subtitle">
+        Hayato Shimada<br>
+        テクノロジーとデザインの交差点で、意味のある体験を創造しています。<br>
+        技術交流を目的に、責任を問わない範囲での無償制作を行っています。
       </p>
+    </section>
+
+    <section class="tech-stack-section">
+      <h2 class="section-title">Tech Stack</h2>
+      <p class="section-description">できること</p>
+      
+      <div class="tech-stack-grid">
+        {techStack.map((tech) => (
+          <div class="tech-badge">
+            <div class="tech-icon-wrapper">
+              {tech.icon ? (
+                <img src={tech.icon} alt={tech.name} class="tech-icon" />
+              ) : (
+                <div class="tech-icon-placeholder"></div>
+              )}
+            </div>
+            <span class="tech-name">{tech.name}</span>
+            <span class="tech-category">{tech.category}</span>
+          </div>
+        ))}
+      </div>
     </section>
 
     <section class="portfolio-grid">
@@ -72,7 +155,7 @@ const portfolioProjects = [
       </div> -->
 
       <div class="cta-center">
-        <a href={getNavLink('/blog')} class="cta-button">すべての記事を見る →</a>
+        <a href={getNavLink('/blog')} class="cta-button">View All Posts</a>
       </div>
     </section>
   </div>
@@ -80,7 +163,7 @@ const portfolioProjects = [
   <div slot="aside" class="portfolio-aside">
     <div class="about-section">
       <h3>About</h3>
-      <p>デザインとテクノロジーの両方を愛する、クリエイティブなエンジニアです。</p>
+      <p>デザインとテクノロジーの両方を愛するエンジニアです。</p>
     </div>
 
     <div class="contact-section">
@@ -103,7 +186,7 @@ const portfolioProjects = [
 
   .hero-title {
     font-size: 2rem;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 0.5rem;
     color: #cecece;
   }
@@ -120,6 +203,83 @@ const portfolioProjects = [
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.8;
+  }
+
+  .tech-stack-section {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #333;
+  }
+
+  .tech-stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .tech-badge {
+    background: #23262f;
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tech-badge:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-color: #444;
+  }
+
+  .tech-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .tech-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: brightness(0.95);
+  }
+
+  .tech-icon-placeholder {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .tech-badge:hover .tech-icon {
+    filter: brightness(1.1);
+  }
+
+  .tech-name {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #cecece;
+    margin-bottom: 0;
+  }
+
+  .tech-category {
+    display: block;
+    font-size: 0.8rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .portfolio-grid {
@@ -270,6 +430,10 @@ const portfolioProjects = [
     .blog-cards-grid {
       grid-template-columns: 1fr;
     }
+
+    .tech-stack-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 640px) {
@@ -282,6 +446,10 @@ const portfolioProjects = [
     }
 
     .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tech-stack-grid {
       grid-template-columns: 1fr;
     }
 
