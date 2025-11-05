@@ -1,15 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getNavLink } from '../lib/blog-helpers.ts'
+import { getPosts } from '../lib/notion/client.ts'
+import PostFeaturedImage from '../components/PostFeaturedImage.astro'
+import PortfolioCard from '../components/PortfolioCard.astro'
+import styles from '../styles/blog.module.css'
+
+// 最新3件のブログ記事を取得
+const recentPosts = await getPosts(4)
+
+// ポートフォリオプロジェクトのデータ
+const portfolioProjects = [
+  {
+    imagePath: '/images/85-Store.png',
+    title: '85-Store',
+    description: '85-Storeのショップフロント。',
+    link: 'https://85-store.com/',
+    tags: ['Development', 'Design', 'Next.js']
+  },
+  {
+    imagePath: '/images/Amu-Technologies2.png',
+    title: 'Amu-Technologies',
+    description: 'Amu-Technologiesのコーポレートサイト。',
+    link: 'https://amu-lab.com/',
+    tags: ['Development', 'Next.js']
+  }
+]
 ---
 
 <Layout title="Portfolio" description="Hayato Shimadaのポートフォリオとブログ" path="/" ogImage="">
   <div slot="main" class="portfolio-container">
     <section class="hero">
       <h1 class="hero-title">Hayato Shimada</h1>
-      <p class="hero-subtitle">Designer & Developer</p>
-      <p class="hero-description">
-        デザインとテクノロジーの交差点で、意味のある体験を創造しています。
+      <p class="hero-subtitle">Developer & Designer</p>
+      <p class="hero-text">
+        テクノロジーとデザインの交差点で、意味のある体験を創造しています。
       </p>
     </section>
 
@@ -18,57 +43,37 @@ import { getNavLink } from '../lib/blog-helpers.ts'
       <p class="section-description">これまでに制作したデザインプロジェクトの一部をご紹介します。</p>
 
       <div class="cards-grid">
-        <!-- ポートフォリオカードのプレースホルダー -->
-        <!-- 実際のプロジェクトに合わせて編集してください -->
-
-        <div class="portfolio-card">
-          <div class="card-image-placeholder">
-            <span>プロジェクト画像</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">プロジェクト名</h3>
-            <p class="card-description">プロジェクトの説明をここに記載します。</p>
-            <div class="card-tags">
-              <span class="tag">UI/UX</span>
-              <span class="tag">Web Design</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="portfolio-card">
-          <div class="card-image-placeholder">
-            <span>プロジェクト画像</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">プロジェクト名</h3>
-            <p class="card-description">プロジェクトの説明をここに記載します。</p>
-            <div class="card-tags">
-              <span class="tag">Branding</span>
-              <span class="tag">Graphic Design</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="portfolio-card">
-          <div class="card-image-placeholder">
-            <span>プロジェクト画像</span>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">プロジェクト名</h3>
-            <p class="card-description">プロジェクトの説明をここに記載します。</p>
-            <div class="card-tags">
-              <span class="tag">Development</span>
-              <span class="tag">React</span>
-            </div>
-          </div>
-        </div>
+        {portfolioProjects.map((project) => (
+          <PortfolioCard
+            imagePath={project.imagePath}
+            title={project.title}
+            description={project.description}
+            link={project.link}
+            tags={project.tags}
+          />
+        ))}
       </div>
     </section>
 
-    <section class="cta-section">
+    <section class="blog-section">
       <h2 class="section-title">Blog</h2>
-      <p class="cta-description">テクノロジー、デザイン、哲学について書いています。</p>
-      <a href={getNavLink('/blog')} class="cta-button">ブログを見る →</a>
+      <p class="section-description">テクノロジー、デザイン、哲学について書いています。</p>
+      
+      <!-- <div class="blog-cards-grid">
+        {recentPosts.length === 0 ? (
+          <p class="no-posts">まだブログ記事がありません。</p>
+        ) : (
+          recentPosts.map((post) => (
+            <div class={styles.post}>
+              <PostFeaturedImage post={post} />
+            </div>
+          ))
+        )}
+      </div> -->
+
+      <div class="cta-center">
+        <a href={getNavLink('/blog')} class="cta-button">すべての記事を見る →</a>
+      </div>
     </section>
   </div>
 
@@ -91,21 +96,20 @@ import { getNavLink } from '../lib/blog-helpers.ts'
   }
 
   .hero {
-    text-align: center;
     padding: 3rem 0;
     margin-bottom: 3rem;
     border-bottom: 1px solid #333;
   }
 
   .hero-title {
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 500;
     margin-bottom: 0.5rem;
     color: #cecece;
   }
 
   .hero-subtitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #999;
     margin-bottom: 1rem;
   }
@@ -142,71 +146,86 @@ import { getNavLink } from '../lib/blog-helpers.ts'
     margin-top: 2rem;
   }
 
-  .portfolio-card {
-    background: #23262f;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .portfolio-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
-
-  .card-image-placeholder {
-    width: 100%;
-    height: 200px;
-    background: linear-gradient(135deg, #404040 0%, #2a2a2a 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .card-content {
-    padding: 1.5rem;
-  }
-
-  .card-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #cecece;
-  }
-
-  .card-description {
-    font-size: 0.95rem;
-    color: #999;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .card-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    background: #404040;
-    color: #cecece;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-  }
-
-  .cta-section {
-    text-align: center;
+  .blog-section {
     padding: 3rem 0;
     border-top: 1px solid #333;
   }
 
-  .cta-description {
-    font-size: 1.1rem;
+  .blog-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    /* グリッドアイテムのサイズを完全に制御 */
+    grid-auto-rows: minmax(240px, auto);
+  }
+
+  /* Blogページと同じカードスタイルを適用 */
+  .blog-cards-grid :global(.post) {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  /* カードの外側のコンテナを完全に固定 */
+  .blog-cards-grid :global(.post) > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    height: 240px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    display: block !important;
+  }
+
+  /* カードの画像サイズを統一 */
+  .blog-cards-grid :global(.post) img,
+  .blog-cards-grid :global(.post) .card-placeholder {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+  }
+
+  /* 絶対配置の要素も制御 */
+  .blog-cards-grid :global(.post) [class*="absolute"] {
+    position: absolute !important;
+    z-index: 2 !important;
+  }
+
+  /* タイトルとテキストの幅を制限 */
+  .blog-cards-grid :global(.post) h1,
+  .blog-cards-grid :global(.post) p {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    word-wrap: break-word !important;
+  }
+
+  .no-posts {
+    text-align: center;
     color: #999;
-    margin-bottom: 2rem;
+    padding: 2rem 0;
+    font-size: 1.1rem;
+  }
+
+  .cta-center {
+    text-align: center;
+    margin-top: 2rem;
   }
 
   .cta-button {
@@ -245,6 +264,12 @@ import { getNavLink } from '../lib/blog-helpers.ts'
     font-size: 0.95rem;
     color: #999;
     line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .blog-cards-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 640px) {
