@@ -22,146 +22,145 @@ for (let i = startPage; i <= endPage; i++) {
 }
 ---
 
-<!-- <div class="pagination"> -->
-  <!-- <a href={getPageLink(1, tag)} class={isFirstPage && 'inactive'}>&lt;&lt;</a> -->
-  <!-- {
-    pages.map((p: number) => (
-      <a href={getPageLink(p, tag)} class={p === currentPage && 'inactive'}>
-        {p}
-      </a>
-    ))
-  } -->
-  <!-- <a href={getPageLink(numberOfPages, tag)} class={isLastPage && 'inactive'}
-    >&gt;&gt;</a
-  > -->
-<!-- </div> -->
 <nav class="pagination">
-  <div class="flex w-0 flex-1">
-    <a href={getPageLink(1, tag)} class={`inline-flex items-center pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 ${isFirstPage ? 'inactive' : ''}`}>
-      <svg class="mr-3 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clip-rule="evenodd" />
-      </svg>
-    </a>
-  </div>
-  <div class="flex justify-center space-x-2">
+  <a 
+    href={getPageLink(currentPage > 1 ? currentPage - 1 : 1, tag)} 
+    class={`pagination-btn ${isFirstPage ? 'inactive' : ''}`}
+    aria-label="前のページ"
+  >
+    <svg class="pagination-icon" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+    </svg>
+    Previous
+  </a>
+
+  <div class="pagination-numbers">
     {
       pages.map((p: number) => (
-        <a href={getPageLink(p, tag)} class={`inline-flex items-center px-4 pt-4 text-sm font-medium ${p === currentPage ? 'text-gray-500' : 'text-gray-700'} hover:border-gray-300 hover:text-gray-700`}>
+        <a 
+          href={getPageLink(p, tag)} 
+          class={`pagination-number ${p === currentPage ? 'active' : ''}`}
+        >
           {p}
         </a>
       ))
     }
   </div>
-  <div class="flex w-0 flex-1 justify-end">
-    <a href={getPageLink(numberOfPages, tag)} class={`inline-flex items-center pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 ${isLastPage ? 'inactive' : ''}`}>
-      <svg class="ml-3 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clip-rule="evenodd" />
-      </svg>
-    </a>
-  </div>
+
+  <a 
+    href={getPageLink(currentPage < numberOfPages ? currentPage + 1 : numberOfPages, tag)} 
+    class={`pagination-btn ${isLastPage ? 'inactive' : ''}`}
+    aria-label="次のページ"
+  >
+    Next
+    <svg class="pagination-icon" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+    </svg>
+  </a>
 </nav>
 
 <style>
   .pagination {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-    color: var(--fg);
-  }
-  .pagination a {
-    display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 2.4rem;
-    height: 2.4rem;
-    margin: 0 0.2rem;
-    border-radius: 4px;
-    background: #23262F;
-    color: #e5e5e5;
-    font-size: 0.85rem;
-    text-align: center;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
   }
-  .pagination a:hover:not(.inactive) {
-    background: #404040;
+
+  .pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #23262f;
+    color: #e5e5e5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .pagination-btn:hover:not(.inactive) {
+    background: #2a2e38;
+    border-color: #444;
     transform: translateY(-2px);
   }
-  .pagination a.inactive {
+
+  .pagination-btn.inactive {
     color: #666;
-    text-decoration: none;
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.4;
   }
-  .flex {
+
+  .pagination-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .pagination-numbers {
     display: flex;
+    gap: 0.5rem;
   }
-  .space-x-2 > * + * {
-    margin-left: 0.5rem;
-  }
-  .w-0 {
-    width: 0;
-  }
-  .flex-1 {
-    flex: 1 1 0%;
-  }
-  .justify-center {
-    justify-content: center;
-  }
-  .justify-end {
-    justify-content: flex-end;
-  }
-  .items-center {
+
+  .pagination-number {
+    display: inline-flex;
     align-items: center;
-  }
-  .px-4 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  .pt-4 {
-    padding-top: 1rem;
-  }
-  .pr-1 {
-    padding-right: 0.25rem;
-  }
-  .pl-1 {
-    padding-left: 0.25rem;
-  }
-  .text-sm {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-  .font-medium {
-    font-weight: 500;
-  }
-  .text-gray-500 {
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    background: #23262f;
     color: #999;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
   }
-  .text-gray-700 {
+
+  .pagination-number:hover {
+    background: #2a2e38;
     color: #e5e5e5;
-  }
-  .text-gray-400 {
-    color: #666;
-  }
-  .hover\:text-gray-700:hover {
-    color: #e5e5e5;
-  }
-  .hover\:border-gray-300:hover {
     border-color: #444;
   }
-  .mr-3 {
-    margin-right: 0.75rem;
+
+  .pagination-number.active {
+    background: #404040;
+    color: #e5e5e5;
+    border-color: #555;
   }
-  .ml-3 {
-    margin-left: 0.75rem;
-  }
-  .h-5 {
-    height: 1.25rem;
-  }
-  .w-5 {
-    width: 1.25rem;
+
+  @media (max-width: 640px) {
+    .pagination {
+      gap: 0.5rem;
+      padding: 1.5rem 0;
+    }
+
+    .pagination-btn {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .pagination-btn span {
+      display: none;
+    }
+
+    .pagination-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .pagination-number {
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 0.85rem;
+    }
   }
 </style>
