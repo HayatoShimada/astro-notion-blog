@@ -92,12 +92,26 @@ const portfolioProjects = [
 <Layout title="Portfolio" description="Hayato Shimadaのポートフォリオとブログ" path="/" ogImage="">
   <div slot="main" class="portfolio-container">
     <section class="hero">
-      <h1 class="hero-title">Development & Design</h1>
-      <p class="hero-subtitle">
-        Hayato Shimada<br>
-        テクノロジーとデザインの交差点で、意味のある体験を創造しています。<br>
-        技術交流を目的に、責任を問わない範囲での無償制作を行っています。
-      </p>
+      <div class="hero-intro">
+        <h1 class="hero-title">About</h1>
+      </div>
+
+      <div class="hero-section">
+        <h2 class="hero-subtitle">Foxtrot Design</h2>
+        <p class="hero-description">
+          Hayato Shimadaの活動名義。<br>
+          デザインは形式的かつ美しく、シンコペーションを感じるものを目指しています。<br>
+          技術交流を目的に、責任を問わない範囲での無償制作を行っています。
+        </p>
+      </div>
+
+      <div class="hero-section">
+        <h2 class="hero-subtitle">Hayato Shimada</h2>
+        <p class="hero-description">
+          Developer & Designer<br>
+          テクノロジーとデザインの交差点で、意味のある体験を創造しています。
+        </p>
+      </div>
     </section>
 
     <section class="tech-stack-section">
@@ -182,26 +196,39 @@ const portfolioProjects = [
     padding: 3rem 0;
     margin-bottom: 3rem;
     border-bottom: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .hero-intro {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
   }
 
   .hero-title {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #cecece;
+    margin: 0;
+    color: #e5e5e5;
+  }
+
+  .hero-section {
+    padding: 1.5rem 0;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
-    color: #999;
-    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #e5e5e5;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
   }
 
   .hero-description {
-    font-size: 1.1rem;
-    color: #cecece;
-    max-width: 600px;
-    margin: 0 auto;
+    font-size: 0.95rem;
+    color: #999;
+    margin: 0;
     line-height: 1.8;
   }
 
@@ -224,7 +251,6 @@ const portfolioProjects = [
     padding: 1.5rem 1rem;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid #333;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -268,15 +294,15 @@ const portfolioProjects = [
 
   .tech-name {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: #cecece;
+    color: #e5e5e5;
     margin-bottom: 0;
   }
 
   .tech-category {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #999;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -290,13 +316,15 @@ const portfolioProjects = [
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #cecece;
+    color: #e5e5e5;
+    letter-spacing: -0.02em;
   }
 
   .section-description {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #999;
     margin-bottom: 2rem;
+    line-height: 1.6;
   }
 
   .cards-grid {
@@ -308,6 +336,7 @@ const portfolioProjects = [
 
   .blog-section {
     padding: 3rem 0;
+    margin-bottom: 4rem;
     border-top: 1px solid #333;
   }
 
@@ -392,16 +421,19 @@ const portfolioProjects = [
     display: inline-block;
     padding: 1rem 2rem;
     background: #404040;
-    color: #cecece;
+    color: #e5e5e5;
     text-decoration: none;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
+    border: 1px solid #555;
   }
 
   .cta-button:hover {
     background: #4a4a4a;
+    border-color: #666;
+    transform: translateY(-2px);
   }
 
   .portfolio-aside {
@@ -414,14 +446,14 @@ const portfolioProjects = [
   }
 
   .portfolio-aside h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
-    color: #cecece;
+    color: #e5e5e5;
   }
 
   .portfolio-aside p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #999;
     line-height: 1.6;
   }
@@ -437,12 +469,28 @@ const portfolioProjects = [
   }
 
   @media (max-width: 640px) {
+    .hero {
+      gap: 2rem;
+    }
+
+    .hero-intro {
+      padding-bottom: 1rem;
+    }
+
     .hero-title {
-      font-size: 2rem;
+      font-size: 1.5rem;
+    }
+
+    .hero-section {
+      padding: 1rem 0;
     }
 
     .hero-subtitle {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    .hero-description {
+      font-size: 0.85rem;
     }
 
     .cards-grid {
@@ -454,7 +502,19 @@ const portfolioProjects = [
     }
 
     .section-title {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+    }
+
+    .tech-name {
+      font-size: 0.95rem;
+    }
+
+    .tech-category {
+      font-size: 0.7rem;
     }
   }
 </style>
