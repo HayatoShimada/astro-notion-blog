@@ -40,7 +40,7 @@ if (database.Cover) {
 }
 
 let customIconURL: string = ''
-if (database.Icon && database.Icon.Type === 'file') {
+if (database.Icon && database.Icon.Type === 'file' && 'Url' in database.Icon) {
   try {
     customIconURL = filePath(new URL(database.Icon.Url))
   } catch (err) {
@@ -87,6 +87,11 @@ if (database.Icon && database.Icon.Type === 'file') {
             <a href={getNavLink('/')} class="text-gray-200">セツゾク</a>
           </h1>
           <p class="mt-2 text-xl">Hayato Shimada Portfolio & Blog</p>
+          <nav class="navigation-menu">
+            <a href={getNavLink('/')} class="nav-link">Home</a>
+            <span class="nav-separator">|</span>
+            <a href={getNavLink('/blog')} class="nav-link">Blog</a>
+          </nav>
         </div>
         {
           coverImageURL && (
@@ -99,6 +104,16 @@ if (database.Icon && database.Icon.Type === 'file') {
         }
       </header>
 
+      <!-- サイドバートグルボタン -->
+      <button id="sidebar-toggle" class="sidebar-toggle" aria-label="サイドバーを開く">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <!-- サイドバーオーバーレイ（背景を暗くする） -->
+      <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
       <div class="layout">
         <main>
           <div
@@ -108,7 +123,13 @@ if (database.Icon && database.Icon.Type === 'file') {
           </div>
         </main>
 
-        <aside class="dorp-shadow-md">
+        <aside id="sidebar" class="dorp-shadow-md">
+          <!-- 閉じるボタン -->
+          <button id="sidebar-close" class="sidebar-close" aria-label="サイドバーを閉じる">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
           <div class="px-1.5 flex justify-start space-x-5 md:order-2 pb-4">
             <a
               href="https://www.facebook.com/hayato.shimada.739"
@@ -191,6 +212,72 @@ if (database.Icon && database.Icon.Type === 'file') {
         <script src={getStaticFilePath('/scripts/fslightbox.js')} />
       )
     }
+
+    <!-- サイドバートグルスクリプト -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        const closeBtn = document.getElementById('sidebar-close');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        function openSidebar() {
+          if (sidebar) {
+            sidebar.classList.add('active');
+          }
+          if (overlay) {
+            overlay.classList.add('active');
+          }
+          if (toggleBtn) {
+            toggleBtn.classList.add('hidden');
+          }
+          // スクロールを無効化
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+          if (sidebar) {
+            sidebar.classList.remove('active');
+          }
+          if (overlay) {
+            overlay.classList.remove('active');
+          }
+          if (toggleBtn) {
+            toggleBtn.classList.remove('hidden');
+          }
+          // スクロールを有効化
+          document.body.style.overflow = '';
+        }
+
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSidebar();
+          });
+        }
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeSidebar();
+          });
+        }
+
+        // オーバーレイをクリックしたときに閉じる
+        if (overlay) {
+          overlay.addEventListener('click', () => {
+            closeSidebar();
+          });
+        }
+
+        // ESCキーで閉じる
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && sidebar && sidebar.classList.contains('active')) {
+            closeSidebar();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
 
@@ -210,18 +297,104 @@ if (database.Icon && database.Icon.Type === 'file') {
     flex: 1;
     background-color: #111316;
     padding: 20px;
-
     overflow-y: auto; /* コンテンツが多い場合にスクロール可能に */
   }
 
+  /* サイドバートグルボタン */
+  .sidebar-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000; /* ヘッダー（z-10）より高くする */
+    background-color: #191d27;
+    color: #ddd;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+  }
+
+  .sidebar-toggle:hover {
+    background-color: #252a36;
+  }
+
+  .sidebar-toggle.hidden {
+    display: none;
+  }
+
+  /* サイドバー内の閉じるボタン */
+  .sidebar-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    color: #ddd;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    z-index: 10;
+  }
+
+  .sidebar-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* サイドバーオーバーレイ */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998; /* サイドバーより少し低く */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  /* 全デバイス共通のサイドバースタイル */
   aside {
-    width: 300px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
     background-color: #191d27;
     padding: 20px;
-    position: sticky;
-    top: 0; /* スクロールしても上部に固定 */
-    height: 100vh;
     overflow-y: auto; /* 内容が多い場合スクロール */
+    transform: translateX(100%); /* 初期状態では画面外に隠す */
+    z-index: 9999;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  /* アクティブ時に表示 */
+  aside.active {
+    transform: translateX(0);
+  }
+
+  /* デスクトップ用 */
+  @media (min-width: 1025px) {
+    aside {
+      width: 350px; /* デスクトップでは幅を広く */
+    }
+  }
+
+  /* タブレット・モバイル用 */
+  @media (max-width: 1024px) {
+    aside {
+      width: 80%;
+      max-width: 300px;
+    }
   }
 
   @media (max-width: 640px) {
@@ -229,15 +402,9 @@ if (database.Icon && database.Icon.Type === 'file') {
       flex-direction: column; /* モバイルでは縦並び */
     }
 
-    aside {
-      width: 100%; /* モバイルでは幅全体 */
-      order: 2; /* メインコンテンツの下に配置 */
-      height: auto; /* 高さ自動調整 */
-      position: relative; /* スティッキー解除 */
-    }
-
     main {
       order: 1;
+      width: 100%;
     }
   }
 
@@ -293,6 +460,30 @@ if (database.Icon && database.Icon.Type === 'file') {
   main header div.description {
     padding: 0.3rem 0 0.6rem;
     font-size: 0.95rem;
+  }
+
+  .navigation-menu {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-link {
+    color: #cecece;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+  }
+
+  .nav-separator {
+    color: #666;
   }
 
   main footer {

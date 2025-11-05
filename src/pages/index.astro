@@ -1,55 +1,267 @@
 ---
-import { NUMBER_OF_POSTS_PER_PAGE } from '../server-constants.ts'
-import {
-  getPosts,
-  getRankedPosts,
-  getAllTags,
-  getNumberOfPages,
-} from '../lib/notion/client.ts'
 import Layout from '../layouts/Layout.astro'
-import NoContents from '../components/NoContents.astro'
-import PostDate from '../components/PostDate.astro'
-import PostTags from '../components/PostTags.astro'
-import PostTitle from '../components/PostTitle.astro'
-import PostFeaturedImage from '../components/PostFeaturedImage.astro'
-import PostExcerpt from '../components/PostExcerpt.astro'
-import ReadMoreLink from '../components/ReadMoreLink.astro'
-import Pagination from '../components/Pagination.astro'
-import BlogPostsLink from '../components/BlogPostsLink.astro'
-import BlogTagsLink from '../components/BlogTagsLink.astro'
-import styles from '../styles/blog.module.css'
-import { getPostLink } from '../lib/blog-helpers.ts'
-
-const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
-  getPosts(NUMBER_OF_POSTS_PER_PAGE),
-  getRankedPosts(),
-  getAllTags(),
-  getNumberOfPages(),
-])
+import { getNavLink } from '../lib/blog-helpers.ts'
 ---
 
-<Layout>
-  <div slot="main" class={styles.main}>
-    {
-      posts.length === 0 ? (
-        <NoContents contents={posts} />
-      ) : (
-        posts.map((post) => (
-          <div class={styles.post} key={post.Slug}>
-            <PostFeaturedImage post={post} />
+<Layout title="Portfolio" description="Hayato Shimadaのポートフォリオとブログ" path="/" ogImage="">
+  <div slot="main" class="portfolio-container">
+    <section class="hero">
+      <h1 class="hero-title">Hayato Shimada</h1>
+      <p class="hero-subtitle">Designer & Developer</p>
+      <p class="hero-description">
+        デザインとテクノロジーの交差点で、意味のある体験を創造しています。
+      </p>
+    </section>
 
+    <section class="portfolio-grid">
+      <h2 class="section-title">Portfolio</h2>
+      <p class="section-description">これまでに制作したデザインプロジェクトの一部をご紹介します。</p>
+
+      <div class="cards-grid">
+        <!-- ポートフォリオカードのプレースホルダー -->
+        <!-- 実際のプロジェクトに合わせて編集してください -->
+
+        <div class="portfolio-card">
+          <div class="card-image-placeholder">
+            <span>プロジェクト画像</span>
           </div>
-        ))
-      )
-    }
+          <div class="card-content">
+            <h3 class="card-title">プロジェクト名</h3>
+            <p class="card-description">プロジェクトの説明をここに記載します。</p>
+            <div class="card-tags">
+              <span class="tag">UI/UX</span>
+              <span class="tag">Web Design</span>
+            </div>
+          </div>
+        </div>
 
-    <footer>
-      <Pagination currentPage={1} numberOfPages={numberOfPages} />
-    </footer>
+        <div class="portfolio-card">
+          <div class="card-image-placeholder">
+            <span>プロジェクト画像</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">プロジェクト名</h3>
+            <p class="card-description">プロジェクトの説明をここに記載します。</p>
+            <div class="card-tags">
+              <span class="tag">Branding</span>
+              <span class="tag">Graphic Design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="card-image-placeholder">
+            <span>プロジェクト画像</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">プロジェクト名</h3>
+            <p class="card-description">プロジェクトの説明をここに記載します。</p>
+            <div class="card-tags">
+              <span class="tag">Development</span>
+              <span class="tag">React</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2 class="section-title">Blog</h2>
+      <p class="cta-description">テクノロジー、デザイン、哲学について書いています。</p>
+      <a href={getNavLink('/blog')} class="cta-button">ブログを見る →</a>
+    </section>
   </div>
 
-  <div slot="aside" class={styles.aside}>
-    <BlogPostsLink heading="Recommended" posts={rankedPosts} />
-    <BlogTagsLink heading="Categories" tags={tags} />
+  <div slot="aside" class="portfolio-aside">
+    <div class="about-section">
+      <h3>About</h3>
+      <p>デザインとテクノロジーの両方を愛する、クリエイティブなエンジニアです。</p>
+    </div>
+
+    <div class="contact-section">
+      <h3>Contact</h3>
+      <p>プロジェクトのご相談やお問い合わせはSNSよりお気軽にどうぞ。</p>
+    </div>
   </div>
 </Layout>
+
+<style>
+  .portfolio-container {
+    max-width: 100%;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #333;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #cecece;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+    color: #cecece;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .portfolio-grid {
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #cecece;
+  }
+
+  .section-description {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 2rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .portfolio-card {
+    background: #23262f;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .portfolio-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-image-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #404040 0%, #2a2a2a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #cecece;
+  }
+
+  .card-description {
+    font-size: 0.95rem;
+    color: #999;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: #404040;
+    color: #cecece;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 3rem 0;
+    border-top: 1px solid #333;
+  }
+
+  .cta-description {
+    font-size: 1.1rem;
+    color: #999;
+    margin-bottom: 2rem;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #404040;
+    color: #cecece;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: #4a4a4a;
+  }
+
+  .portfolio-aside {
+    padding: 1rem 0;
+  }
+
+  .about-section,
+  .contact-section {
+    margin-bottom: 2rem;
+  }
+
+  .portfolio-aside h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #cecece;
+  }
+
+  .portfolio-aside p {
+    font-size: 0.95rem;
+    color: #999;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
