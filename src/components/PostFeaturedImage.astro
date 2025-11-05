@@ -6,15 +6,12 @@ import PostExcerpt from './PostExcerpt.astro'
 import { getPostLink } from '../lib/blog-helpers.ts'
 import PostDate from './PostDate.astro'
 import PostTags from './PostTags.astro'
-import ReadMoreLink from './ReadMoreLink.astro'
 
 export interface Props {
   post: Post
 }
 
 const { post } = Astro.props
-
-let title = post.Title
 
 let image = '';
 
@@ -32,78 +29,96 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
 
 ---
 
-<div class="card-container">
-  {
-    image && (
-      <img
-        src={image}
-        alt={post.Title}
-        class="card-image"
-      />
-    )
-  }
-  {
-    !image && (
-      <div class="card-image card-placeholder"></div>
-    )
-  }
-  <div class="absolute top-0 left-0 p-2 text-white text-xs font-semibold">
-    <PostDate post={post} />
-  </div>
-  <div class="absolute top-0 right-0 p-2">
-    <PostTags post={post} />
-  </div>
-  <div class="absolute inset-0 flex items-center justify-center">
-    <div class="text-center px-4">
-      <h1 class="text-white text-3xl font-bold">
-        <PostTitle post={post} />
-      </h1>
-      <p class="text-white text-base mt-2">
-        <PostExcerpt post={post} />
-      </p>
+<a href={getPostLink(post.Slug)} class="blog-card">
+  {image ? (
+    <div class="card-image">
+      <img src={image} alt={post.Title} />
     </div>
+  ) : (
+    <div class="card-image-placeholder">
+      <span>No Image</span>
+    </div>
+  )}
+  <div class="card-content">
+    <div class="card-meta">
+      <PostDate post={post} />
+      <PostTags post={post} />
+    </div>
+    <h3 class="card-title">
+      <PostTitle post={post} enableLink={false} />
+    </h3>
+    <p class="card-excerpt">
+      <PostExcerpt post={post} />
+    </p>
   </div>
-</div>
+</a>
 
 <style>
-  .card-container {
-    position: relative;
+  .blog-card {
     display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-    height: 240px;
+    background: #23262f;
+    border-radius: 8px;
     overflow: hidden;
-    background-color: #2a2a2a;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
 
   .card-image {
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .card-image img {
     width: 100%;
     height: 100%;
-    min-width: 100%;
-    min-height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.5);
-    transition: filter 0.3s ease-in-out;
-    z-index: 1;
   }
 
-  .card-placeholder {
+  .card-image-placeholder {
+    width: 100%;
+    height: 200px;
     background: linear-gradient(135deg, #404040 0%, #2a2a2a 100%);
-    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.85rem;
   }
 
-  .card-container:hover .card-image {
-    filter: brightness(1);
+  .card-content {
+    padding: 1.5rem;
   }
 
-  /* 絶対配置の要素を画像の上に表示 */
-  .card-container > .absolute {
-    position: absolute;
-    z-index: 2;
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #e5e5e5;
+  }
+
+  .card-excerpt {
+    font-size: 0.9rem;
+    color: #999;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style>

@@ -50,43 +50,56 @@ const { heading, posts } = Astro.props
 
 <style>
   .blog-posts-link {
+    margin-bottom: 2rem;
   }
+  
   .blog-posts-link h2 {
-    margin: 0;
-    padding-left: 0.4rem;
-    color: #727283;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
+    color: #e5e5e5;
+    border-bottom: 2px solid #333;
   }
+  
   .blog-posts-link ul {
     list-style-type: none;
     padding: 0;
-    margin-top: 0.4rem;
-    margin-block-end: 1rem;
+    margin: 0;
   }
+  
   .blog-posts-link ul li {
+    margin-bottom: 0.5rem;
   }
+  
   .blog-posts-link ul li a {
     display: block;
-    border-radius: var(--radius);
-    padding: 0.4rem 0.4rem;
-    line-height: 1.2rem;
-    color: inherit;
-    font-size: 0.95rem;
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.4;
+    color: #999;
+    font-size: 0.9rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transition: all 0.2s ease;
+    background: transparent;
   }
+  
   .blog-posts-link ul li a:hover {
-    color: #ffffff;
+    color: #e5e5e5;
+    background: rgba(255, 255, 255, 0.05);
   }
+  
   .blog-posts-link ul li a span,
   .blog-posts-link ul li a img {
     display: inline-block;
-    margin-right: 0.2rem;
+    margin-right: 0.4rem;
   }
+  
   .blog-posts-link ul li a img {
-    width: 1.25rem;
-    height: 1.25rem;
-    vertical-align: sub;
+    width: 1.1rem;
+    height: 1.1rem;
+    vertical-align: middle;
   }
 </style>

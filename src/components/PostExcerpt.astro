@@ -10,20 +10,14 @@ export interface Props {
 const { post } = Astro.props
 ---
 
-<div class="post-excerpt">
-  <a href={getPostLink(post.Slug)}>
-
-  <p>{post.Excerpt ? post.Excerpt : ''}</p>
-  </a>
-</div>
+<span class="post-excerpt">
+  {post.Excerpt ? post.Excerpt : ''}
+</span>
 
 <style>
   .post-excerpt {
-    padding: 0.2rem 0;
-    font-size: 1rem;
-  }
-
-  .post-excerpt p {
-    margin: 0;
+    display: inline;
+    font-size: inherit;
+    color: inherit;
   }
 </style>

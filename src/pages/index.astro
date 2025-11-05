@@ -3,15 +3,17 @@ import Layout from '../layouts/Layout.astro'
 import { getNavLink } from '../lib/blog-helpers.ts'
 import { getPosts } from '../lib/notion/client.ts'
 import PortfolioCard from '../components/PortfolioCard.astro'
+import SocialLinks from '../components/SocialLinks.astro'
+import PostFeaturedImage from '../components/PostFeaturedImage.astro'
 
 // 最新3件のブログ記事を取得
-const recentPosts = await getPosts(4)
+const recentPosts = await getPosts(3)
 
 // 技術スタック
 const techStack = [
   { 
     name: 'Next.js', 
-    category: 'Frontend',
+    category: 'Framework',
     icon: 'https://cdn.simpleicons.org/nextdotjs/white',
     color: '#000000'
   },
@@ -22,7 +24,25 @@ const techStack = [
     color: '#3178C6'
   },
   { 
-    name: 'PostgreSQL', 
+    name: 'Blazor', 
+    category: 'Framework',
+    icon: 'https://cdn.simpleicons.org/blazor/white',
+    color: '#239120'
+  },
+  { 
+    name: 'C#', 
+    category: 'Language',
+    icon: 'https://cdn.simpleicons.org/dotnet/white',
+    color: '#239120'
+  },
+  { 
+    name: 'Python', 
+    category: 'Language',
+    icon: 'https://cdn.simpleicons.org/python/white',
+    color: '#3776AB'
+  },
+  { 
+    name: 'SQL', 
     category: 'Database',
     icon: 'https://cdn.simpleicons.org/postgresql/white',
     color: '#4169E1'
@@ -30,18 +50,13 @@ const techStack = [
   { 
     name: 'PLC', 
     category: 'Automation',
+    icon: 'https://cdn.simpleicons.org/mitsubishi/white',
     color: '#E60012'
   },
   { 
     name: 'Adobe', 
     category: 'Design',
     color: '#FF0000'
-  },
-  { 
-    name: 'Python', 
-    category: 'Language',
-    icon: 'https://cdn.simpleicons.org/python/white',
-    color: '#3776AB'
   }
 ]
 
@@ -99,7 +114,7 @@ const portfolioProjects = [
       <div class="hero-section">
         <h2 class="hero-subtitle">Foxtrot Design</h2>
         <p class="hero-description">
-          Hayato Shimadaの活動名義。<br>
+          Hayato Shimadaの活動名義。ペルソナ。代名詞。<br>
           デザインは形式的かつ美しく、シンコペーションを感じるものを目指しています。<br>
           技術交流を目的に、責任を問わない範囲での無償制作を行っています。
         </p>
@@ -109,14 +124,16 @@ const portfolioProjects = [
         <h2 class="hero-subtitle">Hayato Shimada</h2>
         <p class="hero-description">
           Developer & Designer<br>
-          テクノロジーとデザインの交差点で、意味のある体験を創造しています。
+          テクノロジーとデザインの交差点で、意味のある体験を創造します。
         </p>
+        <div class="hero-social">
+          <SocialLinks />
+        </div>
       </div>
     </section>
 
     <section class="tech-stack-section">
       <h2 class="section-title">Tech Stack</h2>
-      <p class="section-description">できること</p>
       
       <div class="tech-stack-grid">
         {techStack.map((tech) => (
@@ -137,7 +154,6 @@ const portfolioProjects = [
 
     <section class="portfolio-grid">
       <h2 class="section-title">Portfolio</h2>
-      <p class="section-description">これまでに制作したデザインプロジェクトの一部をご紹介します。</p>
 
       <div class="cards-grid">
         {portfolioProjects.map((project) => (
@@ -156,17 +172,15 @@ const portfolioProjects = [
       <h2 class="section-title">Blog</h2>
       <p class="section-description">テクノロジー、デザイン、哲学について書いています。</p>
       
-      <!-- <div class="blog-cards-grid">
+      <div class="blog-cards-grid">
         {recentPosts.length === 0 ? (
           <p class="no-posts">まだブログ記事がありません。</p>
         ) : (
-          recentPosts.map((post) => (
-            <div class={styles.post}>
-              <PostFeaturedImage post={post} />
-            </div>
+          recentPosts.slice(0, 3).map((post) => (
+            <PostFeaturedImage post={post} />
           ))
         )}
-      </div> -->
+      </div>
 
       <div class="cta-center">
         <a href={getNavLink('/blog')} class="cta-button">View All Posts</a>
@@ -195,22 +209,22 @@ const portfolioProjects = [
   .hero {
     padding: 3rem 0;
     margin-bottom: 3rem;
-    border-bottom: 1px solid #333;
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
   }
 
   .hero-intro {
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #2a2a2a;
+    margin-bottom: 2rem;
   }
 
   .hero-title {
     font-size: 2rem;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
     color: #e5e5e5;
+    border-bottom: 2px solid #333;
   }
 
   .hero-section {
@@ -228,14 +242,17 @@ const portfolioProjects = [
   .hero-description {
     font-size: 0.95rem;
     color: #999;
-    margin: 0;
+    margin: 0 0 1.5rem 0;
     line-height: 1.8;
+  }
+
+  .hero-social {
+    display: flex;
+    margin-top: 1.5rem;
   }
 
   .tech-stack-section {
     margin-bottom: 4rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid #333;
   }
 
   .tech-stack-grid {
@@ -315,15 +332,17 @@ const portfolioProjects = [
   .section-title {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
     color: #e5e5e5;
     letter-spacing: -0.02em;
+    border-bottom: 2px solid #333;
   }
 
   .section-description {
     font-size: 0.95rem;
     color: #999;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem 0;
     line-height: 1.6;
   }
 
@@ -337,72 +356,14 @@ const portfolioProjects = [
   .blog-section {
     padding: 3rem 0;
     margin-bottom: 4rem;
-    border-top: 1px solid #333;
   }
 
   .blog-cards-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 3rem;
-    /* グリッドアイテムのサイズを完全に制御 */
-    grid-auto-rows: minmax(240px, auto);
-  }
-
-  /* Blogページと同じカードスタイルを適用 */
-  .blog-cards-grid :global(.post) {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 100% !important;
-    display: block !important;
-    overflow: visible !important;
-  }
-
-  /* カードの外側のコンテナを完全に固定 */
-  .blog-cards-grid :global(.post) > div {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 100% !important;
-    height: 240px !important;
-    position: relative !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-    display: block !important;
-  }
-
-  /* カードの画像サイズを統一 */
-  .blog-cards-grid :global(.post) img,
-  .blog-cards-grid :global(.post) .card-placeholder {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 100% !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    min-height: 100% !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    display: block !important;
-  }
-
-  /* 絶対配置の要素も制御 */
-  .blog-cards-grid :global(.post) [class*="absolute"] {
-    position: absolute !important;
-    z-index: 2 !important;
-  }
-
-  /* タイトルとテキストの幅を制限 */
-  .blog-cards-grid :global(.post) h1,
-  .blog-cards-grid :global(.post) p {
-    max-width: 100% !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    word-wrap: break-word !important;
   }
 
   .no-posts {
@@ -427,7 +388,6 @@ const portfolioProjects = [
     font-size: 1rem;
     font-weight: 600;
     transition: all 0.2s ease;
-    border: 1px solid #555;
   }
 
   .cta-button:hover {
@@ -448,8 +408,10 @@ const portfolioProjects = [
   .portfolio-aside h3 {
     font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
     color: #e5e5e5;
+    border-bottom: 2px solid #333;
   }
 
   .portfolio-aside p {
@@ -474,11 +436,13 @@ const portfolioProjects = [
     }
 
     .hero-intro {
-      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero-title {
       font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
     }
 
     .hero-section {
@@ -503,10 +467,13 @@ const portfolioProjects = [
 
     .section-title {
       font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
     }
 
     .section-description {
       font-size: 0.9rem;
+      margin: 0 0 1.5rem 0;
     }
 
     .tech-name {
