@@ -1,13 +1,36 @@
 ---
+interface Contributor {
+  name: string
+  role: string
+  sns: Array<{
+    platform: string
+    url: string
+  }>
+}
+
 export interface Props {
   imagePath?: string
   title: string
   description: string
   link?: string
   tags: string[]
+  contributors?: Contributor[]
 }
 
-const { imagePath, title, description, link, tags } = Astro.props
+const { imagePath, title, description, link, tags, contributors } = Astro.props
+
+// SNSプラットフォームのアイコンURLを取得する関数
+const getSnsIcon = (platform: string) => {
+  const icons: Record<string, string> = {
+    instagram: 'https://cdn.simpleicons.org/instagram/white',
+    twitter: 'https://cdn.simpleicons.org/x/white',
+    behance: 'https://cdn.simpleicons.org/behance/white',
+    dribbble: 'https://cdn.simpleicons.org/dribbble/white',
+    linkedin: 'https://cdn.simpleicons.org/linkedin/white',
+    github: 'https://cdn.simpleicons.org/github/white',
+  }
+  return icons[platform.toLowerCase()] || 'https://cdn.simpleicons.org/link/white'
+}
 ---
 
 <div class="portfolio-card">
@@ -34,6 +57,35 @@ const { imagePath, title, description, link, tags } = Astro.props
         <span class="tag">{tag}</span>
       ))}
     </div>
+
+    {contributors && contributors.length > 0 && (
+      <div class="card-contributors">
+        <h4 class="contributors-title">Contributors</h4>
+        {contributors.map((contributor) => (
+          <div class="contributor">
+            <div class="contributor-info">
+              <span class="contributor-name">{contributor.name}</span>
+              <span class="contributor-role">{contributor.role}</span>
+            </div>
+            {contributor.sns && contributor.sns.length > 0 && (
+              <div class="contributor-sns">
+                {contributor.sns.map((social) => (
+                  <a 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="sns-link"
+                    title={`${contributor.name} on ${social.platform}`}
+                  >
+                    <img src={getSnsIcon(social.platform)} alt={social.platform} class="sns-icon" />
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 </div>
 
@@ -114,6 +166,84 @@ const { imagePath, title, description, link, tags } = Astro.props
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
     font-size: 0.75rem;
+  }
+
+  .card-contributors {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+  }
+
+  .contributors-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e5e5e5;
+    margin: 0 0 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .contributor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .contributor:last-child {
+    margin-bottom: 0;
+  }
+
+  .contributor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contributor-name {
+    font-size: 0.8rem;
+    color: #e5e5e5;
+    font-weight: 500;
+  }
+
+  .contributor-role {
+    font-size: 0.7rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .contributor-sns {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .sns-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: #404040;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .sns-link:hover {
+    background: #4a4a4a;
+    transform: translateY(-1px);
+  }
+
+  .sns-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    filter: brightness(0.9);
+  }
+
+  .sns-link:hover .sns-icon {
+    filter: brightness(1.1);
   }
 </style>
 
