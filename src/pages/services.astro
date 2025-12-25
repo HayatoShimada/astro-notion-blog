@@ -18,45 +18,54 @@ import SocialLinks from '../components/SocialLinks.astro'
 
     <section class="services-content">
       <div class="service-section">
-        <h2 class="section-title">目的</h2>
+        <h2 class="section-title">Probonoとは</h2>
         <div class="service-description">
           <p>
-            本活動(foxtrot design)は、Probono（技術ボランティア）として以下の目的で実施しています。
+            本活動(Foxtrot Design)は、専門スキル（主にWeb/ソフトウェア開発）を活かして、個人・団体・地域活動などの課題解決を支援する <strong>Probono（プロボノ：職能を活かした社会貢献）</strong> として行っています。
+          </p>
+          <p>
+            営利目的の受託開発とは異なり、支援を通じて次のような価値を生むことを目的とします。
           </p>
           <ul class="service-list">
-            <li>非技術者にも技術的機会を提供する</li>
-            <li>支援者との交流</li>
-            <li>他業種との技術交流</li>
+            <li>デジタル活用の機会を広げる（情報発信・業務改善・DXの入口づくり）</li>
+            <li>相談者・支援者との相互学習（現場理解と技術共有）</li>
+            <li>実例をもとに、知見を社会に還元する</li>
           </ul>
         </div>
       </div>
 
       <div class="service-section">
-        <h2 class="section-title">できること</h2>
+        <h2 class="section-title">支援できること（例）</h2>
         <div class="service-description">
+          <p>
+            ご相談内容や状況に応じて、無理のない範囲で支援します。
+          </p>
           <ul class="service-list">
-            <li>ウェブサイトの製作</li>
-            <li>ウェブサービスの構築</li>
-            <li>スマホアプリの構築</li>
-            <li>その他コーディング</li>
-            <li>各種技術相談</li>
+            <li>Webサイト制作（静的サイト／CMS導入など）</li>
+            <li>簡易なWebアプリ・業務ツールの試作（MVP）</li>
+            <li>スマホアプリの試作／技術検討</li>
+            <li>既存サイトの改善提案（UI/UX・導線・表示速度など）</li>
+            <li>技術相談（要件整理、技術選定、実装方針、運用の考え方）</li>
           </ul>
         </div>
       </div>
 
       <div class="service-section">
-        <h2 class="section-title">できないこと</h2>
+        <h2 class="section-title">支援できないこと（範囲外）</h2>
         <div class="service-description">
-          <p class="important-notice">
-            以下の事項については、本活動の範囲外となります。ご理解のほどお願いいたします。
+          <p>
+            Probonoの性質上、以下は原則として対象外です。
           </p>
           <ul class="service-list">
-            <li>サーバー費用等各種支払い</li>
-            <li>製作品に関する保証</li>
-            <li>希望納期の順守</li>
-            <li>緊急対応</li>
-            <li>継続的な保守</li>
+            <li>サーバー費用・ドメイン・有料ツール等の費用負担</li>
+            <li>成果物の性能・安全性・売上などの保証</li>
+            <li>希望納期の確約（スケジュールは双方の状況で調整）</li>
+            <li>緊急対応（即日復旧など）</li>
+            <li>継続的な保守運用の請負（監視、定期作業、常時対応 等）</li>
           </ul>
+          <p>
+            ※必要に応じて「次に何をすると安全か／運用できるか」の整理や、引き継ぎに向けたドキュメント整備は相談可能です。
+          </p>
         </div>
       </div>
 
@@ -64,11 +73,32 @@ import SocialLinks from '../components/SocialLinks.astro'
         <h2 class="section-title">費用について</h2>
         <div class="service-description">
           <p>
-            基本的にProbono（技術ボランティア）のため、技術提供は無償で行います。
+            支援は原則として無償です（Probono）。
           </p>
           <p>
-            もしご支援いただける場合は、<a href="https://85-store.com" target="_blank" rel="noopener noreferrer" class="external-link">85-Store</a>で洋服を購入していただけると嬉しいです。
+            ただし、運用に必要な外部費用（ドメイン・サーバー・各種SaaS等）はご負担いただきます。
           </p>
+          <p>
+            もし活動をご支援いただける場合は、任意の形で応援いただけると励みになります。
+            （例：<a href="https://85-store.com" target="_blank" rel="noopener noreferrer" class="external-link">85-Store</a>での購入、SNSでの紹介、活動へのフィードバック等）
+          </p>
+        </div>
+      </div>
+
+      <div class="service-section">
+        <h2 class="section-title">活動の公開について（ポートフォリオ・発信）</h2>
+        <div class="service-description">
+          <p>
+            支援の過程で得られた知見や制作実績を、ポートフォリオや技術共有を目的として公開する場合があります。
+          </p>
+          <p>
+            公開する場合は、以下を原則とします。
+          </p>
+          <ul class="service-list">
+            <li>機密情報・個人情報・内部アカウント情報は公開しない</li>
+            <li>公開に適さない内容は伏せる／抽象化する</li>
+            <li>必要に応じて、事前に相談のうえ取り扱いを決める</li>
+          </ul>
         </div>
       </div>
 
@@ -76,7 +106,10 @@ import SocialLinks from '../components/SocialLinks.astro'
         <h2 class="section-title">お問い合わせ</h2>
         <div class="service-description">
           <p>
-            プロジェクトのご相談やお問い合わせは、SNSよりお気軽にどうぞ。
+            ご相談はSNSからお気軽にご連絡ください。
+          </p>
+          <p>
+            「何を作るべきか分からない」段階でも大丈夫です。課題の整理から一緒に考えます。
           </p>
           <div class="social-links-wrapper">
             <SocialLinks />
