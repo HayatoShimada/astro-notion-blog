@@ -151,6 +151,15 @@ const portfolioProjects = [
       </div>
     </section>
 
+    <section class="services-link-section">
+      <div class="services-link-wrapper">
+        <a href={getNavLink('/services')} class="services-link">
+          <span class="services-link-text">製作条件・支援内容について</span>
+          <span class="services-link-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
     <section class="tech-stack-section">
       <h2 class="section-title">Tech Stack</h2>
 
@@ -277,6 +286,50 @@ const portfolioProjects = [
   .hero-social {
     display: flex;
     margin-top: 1.5rem;
+  }
+
+  .services-link-section {
+    margin-bottom: 3rem;
+  }
+
+  .services-link-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .services-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: #23262f;
+    color: #e5e5e5;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid #333;
+  }
+
+  .services-link:hover {
+    background: #2a2d37;
+    border-color: #444;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .services-link-text {
+    color: #e5e5e5;
+  }
+
+  .services-link-arrow {
+    color: #999;
+    transition: transform 0.2s ease;
+  }
+
+  .services-link:hover .services-link-arrow {
+    transform: translateX(4px);
   }
 
   .tech-stack-section {

@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getNavLink } from '../lib/blog-helpers.ts'
+import SocialLinks from '../components/SocialLinks.astro'
+---
+
+<Layout
+  title="Services"
+  description="製作条件・支援内容について"
+  path="/services"
+  ogImage=""
+>
+  <div slot="main" class="services-container">
+    <section class="services-hero">
+      <h1 class="services-title">Services</h1>
+      <p class="services-subtitle">Probono（技術ボランティア）について</p>
+    </section>
+
+    <section class="services-content">
+      <div class="service-section">
+        <h2 class="section-title">目的</h2>
+        <div class="service-description">
+          <p>
+            本活動(foxtrot design)は、Probono（技術ボランティア）として以下の目的で実施しています。
+          </p>
+          <ul class="service-list">
+            <li>非技術者にも技術的機会を提供する</li>
+            <li>支援者との交流</li>
+            <li>他業種との技術交流</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-section">
+        <h2 class="section-title">できること</h2>
+        <div class="service-description">
+          <ul class="service-list">
+            <li>ウェブサイトの製作</li>
+            <li>ウェブサービスの構築</li>
+            <li>スマホアプリの構築</li>
+            <li>その他コーディング</li>
+            <li>各種技術相談</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-section">
+        <h2 class="section-title">できないこと</h2>
+        <div class="service-description">
+          <p class="important-notice">
+            以下の事項については、本活動の範囲外となります。ご理解のほどお願いいたします。
+          </p>
+          <ul class="service-list">
+            <li>サーバー費用等各種支払い</li>
+            <li>製作品に関する保証</li>
+            <li>希望納期の順守</li>
+            <li>緊急対応</li>
+            <li>継続的な保守</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-section">
+        <h2 class="section-title">費用について</h2>
+        <div class="service-description">
+          <p>
+            基本的にProbono（技術ボランティア）のため、技術提供は無償で行います。
+          </p>
+          <p>
+            もしご支援いただける場合は、<a href="https://85-store.com" target="_blank" rel="noopener noreferrer" class="external-link">85-Store</a>で洋服を購入していただけると嬉しいです。
+          </p>
+        </div>
+      </div>
+
+      <div class="service-section">
+        <h2 class="section-title">お問い合わせ</h2>
+        <div class="service-description">
+          <p>
+            プロジェクトのご相談やお問い合わせは、SNSよりお気軽にどうぞ。
+          </p>
+          <div class="social-links-wrapper">
+            <SocialLinks />
+          </div>
+          <div class="cta-center">
+            <a href={getNavLink('/')} class="cta-button">ホームに戻る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .services-container {
+    max-width: 100%;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .services-hero {
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .services-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
+    color: #e5e5e5;
+    border-bottom: 2px solid #333;
+    display: inline-block;
+  }
+
+  .services-subtitle {
+    font-size: 1.1rem;
+    color: #999;
+    margin-top: 1rem;
+  }
+
+  .services-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .service-section {
+    padding: 2rem 0;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.75rem;
+    color: #e5e5e5;
+    letter-spacing: -0.02em;
+    border-bottom: 2px solid #333;
+  }
+
+  .service-description {
+    font-size: 0.95rem;
+    color: #999;
+    line-height: 1.8;
+  }
+
+  .service-description p {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .service-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+
+  .service-list li {
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #999;
+    line-height: 1.6;
+  }
+
+  .service-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #666;
+    font-weight: bold;
+  }
+
+  .important-notice {
+    color: #ccc;
+    font-weight: 500;
+    margin-bottom: 1rem !important;
+  }
+
+  .external-link {
+    color: #e5e5e5;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  .external-link:hover {
+    color: #fff;
+  }
+
+  .social-links-wrapper {
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .cta-center {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #404040;
+    color: #e5e5e5;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: #4a4a4a;
+    border-color: #666;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .services-title {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+
+    .service-item-title {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
