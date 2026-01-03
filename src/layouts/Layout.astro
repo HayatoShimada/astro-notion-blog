@@ -22,10 +22,7 @@ const database = await getDatabase()
 const siteTitle = title ? `${title} - ${database.Title}` : database.Title
 const siteDescription = description ? description : database.Description
 const siteURL = new URL(getNavLink(path), Astro.site).toString()
-const siteOGImage = new URL(
-  getStaticFilePath('/default-og-image.png'),
-  Astro.site
-)
+const siteOGImage = new URL('/favicon.svg', Astro.site)
 
 let coverImageURL: string = ''
 if (database.Cover) {
@@ -69,8 +66,8 @@ if (database.Icon && database.Icon.Type === 'file' && 'Url' in database.Icon) {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
-    <title>Foxtrot Design</title>
-    <meta name="description" content="Hayato Shimadaのポートフォリオとテック&ファッション&哲学のブログです。" />
+    <title>{siteTitle}</title>
+    <meta name="description" content={siteDescription} />
     <link rel="canonical" href={siteURL} />
     <meta property="og:url" content={siteURL} />
     <meta property="og:title" content={siteTitle} />
